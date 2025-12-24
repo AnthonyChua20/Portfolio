@@ -2,10 +2,11 @@ import Note from "../models/note.js";
 
 async function getAllNotes(_, res) {
   try {
-    const notes = (await Note.find()).sort({createdAt:-1});//Newest post first
+    const notes = await Note.find().sort({ createdAt: -1 });//Newest post first
     res.status(200).json(notes);
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error", });
   }
 }
 
