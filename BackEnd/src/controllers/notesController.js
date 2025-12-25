@@ -31,10 +31,22 @@ async function createNote(req, res) {
 async function updateNote(req, res) {
   try {
     const { title, content } = req.body;
+
+    const updateData = {};
+
+    if (title) updateData.title = title;
+    if (content) updateData.content = content;
+
+    if (Object.keys(updateData).length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Nothing to update." });
+    }
+
     const updatedNote = await Note.findByIdAndUpdate(
       req.params.id,
-      { title, content },
-      { new: true }
+      { $set: updateData },
+      { new: true, runValidators: true }
     );
     if (!updatedNote)
       return res.status(404).json({ message: "Note not found." });
@@ -55,13 +67,13 @@ async function deleteNote(req, res) {
   }
 }
 
-async function getNote(req,res){
+async function getNote(req,res,next){
     try {
         const notes = await Note.findById(req.params.id);
         if(!notes) return res.status(404).json({message:"Note not found!"})
         res.json(notes)
     } catch (error) {
-        res.status(500).json({ message: "Internal Server Error" });
+        next(error);
     }
 }
 
