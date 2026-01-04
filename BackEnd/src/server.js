@@ -5,13 +5,18 @@ import "dotenv/config";
 import rateLimiter from "./middleware/ratelimiter.js";
 import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
+import cors from "cors"
 
 const app = express();
 
 // Middleware
+app.use(cors({
+  origin:"http://localhost:5173",
+}))
 app.use(express.json());
 app.use(logger);
 app.use(rateLimiter)
+
 
 
 // Routes
