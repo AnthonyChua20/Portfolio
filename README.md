@@ -1,9 +1,10 @@
 📌 Project Overview
 
-This project is the backend of my personal portfolio website, built using the MERN stack.
-It exposes a RESTful API for managing notes and demonstrates backend fundamentals such as CRUD operations, middleware usage, database integration, and basic API security.
+This project is the backend service for my personal portfolio website, built using the MERN stack.
 
-The project was designed to be simple, clean, and easy to extend, while following real-world backend structure and best practices.
+It exposes a RESTful API for managing notes (used as portfolio content) and demonstrates core backend engineering concepts such as CRUD operations, middleware usage, database integration, and basic API security practices.
+
+The project was intentionally designed to be clean, modular, and easy to extend, following real-world backend structure and best practices.
 
 🛠️ Tech Stack
 
@@ -30,9 +31,9 @@ src/
 
 🚀 Features
 
-Full CRUD API for notes
+Full CRUD REST API for notes
 
-RESTful routing and controller separation
+Controller–route separation for maintainability
 
 MongoDB integration with Mongoose
 
@@ -42,15 +43,25 @@ Graceful handling of external service failures
 
 Clean and scalable backend architecture
 
+🧱 Architecture Overview
+React Frontend
+      ↓
+Express REST API
+      ↓
+MongoDB (Mongoose)
+
+
+Sensitive logic and third-party integrations are handled server-side to maintain security and separation of concerns.
+
 🔐 Rate Limiting
 
-To prevent abuse, the API uses rate limiting middleware powered by Upstash Redis.
+To prevent abuse, the API implements rate limiting middleware powered by Upstash Redis.
 
-Limits requests per IP
+Limits requests per IP address
 
-Returns HTTP 429 Too Many Requests when exceeded
+Returns HTTP 429 (Too Many Requests) when exceeded
 
-Designed to fail open (application remains usable if the rate limit service is unavailable)
+Designed to fail open — the application remains usable if the rate limit service is unavailable
 
 📡 API Endpoints
 Method	Endpoint	Description
@@ -64,24 +75,27 @@ DELETE	/api/notes/:id	Delete a note
 Create a .env file in the root directory:
 
 PORT=5000
-MongoDB_URL=your_mongodb_connection_string
+MONGODB_URI=your_mongodb_connection_string
 UPSTASH_REDIS_REST_URL=your_upstash_url
 UPSTASH_REDIS_REST_TOKEN=your_upstash_token
+
+
+Note: Environment variables are not committed for security reasons.
 
 ▶️ Running the Project Locally
 npm install
 npm run dev
 
 
-The server will start on:
+The server will start at:
 
 http://localhost:5000
 
 🧠 What I Learned
 
-Structuring a backend project using MVC principles
+Structuring backend projects using MVC principles
 
-Writing asynchronous controllers using async/await
+Writing asynchronous controllers with async/await
 
 Implementing and chaining Express middleware
 
@@ -89,7 +103,7 @@ Connecting and querying MongoDB with Mongoose
 
 Applying basic API security concepts (rate limiting)
 
-Handling failures gracefully in backend systems
+Designing backend systems that fail gracefully
 
 🔮 Future Improvements
 
@@ -97,7 +111,7 @@ Authentication & authorization
 
 User-specific data
 
-Frontend integration
+Extended frontend integration
 
 Deployment to cloud platforms
 
