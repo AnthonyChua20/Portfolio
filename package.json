@@ -1,0 +1,22 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "📌 Project Overview",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "build": "npm install --prefix BackEnd && npm install --prefix FrontEnd && npm run build --prefix FrontEnd",
+    "start": "npm run start --prefix BackEnd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnthonyChua20/Portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnthonyChua20/Portfolio/issues"
+  },
+  "homepage": "https://github.com/AnthonyChua20/Portfolio#readme"
+}

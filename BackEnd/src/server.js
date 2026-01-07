@@ -5,30 +5,46 @@ import "dotenv/config";
 import rateLimiter from "./middleware/ratelimiter.js";
 import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
-import cors from "cors"
+import cors from "cors";
+import path from "path";
 
 const app = express();
+// Port
+const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
 
 // Middleware
-app.use(cors({
-  origin:"http://localhost:5173",
-}))
+//For development(CORS)
+if (process.env.NODE_ENV !== "production") {
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+    })
+  );
+}
 app.use(express.json());
 app.use(logger);
-app.use(rateLimiter)
-
-
+app.use(rateLimiter);
 
 // Routes
 app.use("/api/notes", noteRoutes);
-app.use(errorHandler)
 
-// Port
-const PORT = process.env.PORT || 5000;
+app.use(express.static(path.join()));
+
+app.use(errorHandler);
+
+//For Production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../FrontEnd/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../FrontEnd", "dist", "index.html"));
+  });
+}
+
+
 // Database
-connectDB().then(()=>{
-
-app.listen(PORT, () => {
-  console.log(`Server started on PORT ${PORT}`);
- });
-}); 
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server started on PORT ${PORT}`);
+  });
+});
