@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import RateLimitedUi from "../components/RateLimitedUI";
+import RateLimitedUi from "../components/RateLimitedUi";
 import { data } from "react-router";
 import toast from "react-hot-toast";
 import NoteCard from "../components/NoteCard";
