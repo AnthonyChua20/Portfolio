@@ -15,13 +15,12 @@ const __dirname = path.resolve();
 
 // Middleware
 //For development(CORS)
-if (process.env.NODE_ENV !== "production") {
   app.use(
     cors({
       origin: "http://localhost:5173",
     })
   );
-}
+
 app.use(express.json());
 app.use(logger);
 app.use(rateLimiter);
