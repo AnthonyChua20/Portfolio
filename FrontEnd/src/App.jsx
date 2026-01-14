@@ -1,20 +1,44 @@
 import React from "react";
-import { Route, Routes } from "react-router";
+import { Route, Routes, Navigate } from "react-router";
 import HomePage from "./pages/HomePage";
 import CreatePage from "./pages/CreatePage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
-import './index.css'
-
+import "./index.css";
+import { isAdmin } from "./lib/admin";
 
 const App = () => {
   return (
-    <div className="relative h-full w-full">
-     <div className="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_60%,#00FF9D40_100%)]" />
-      <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/create" element={<CreatePage />}></Route>
-        <Route path="/project/:id" element={<ProjectDetailPage />}></Route>
-      </Routes>
+    <div className="relative min-h-screen w-full text-base-content overflow-hidden">
+      {/* BACKGROUND */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          background: `
+            radial-gradient(
+              120% 120% at 50% 10%,
+              hsl(var(--b1)) 50%,
+              transparent 85%
+            ),
+            radial-gradient(
+              90% 70% at 50% 100%,
+              rgba(0, 255, 157, 0.55),
+              transparent 75%
+            )
+          `,
+        }}
+      />
+
+      {/* CONTENT */}
+      <div className="relative z-10">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/create"
+            element={isAdmin() ? <CreatePage /> : <Navigate to="/" />}
+          />
+          <Route path="/project/:id" element={<ProjectDetailPage />} />
+        </Routes>
+      </div>
     </div>
   );
 };

@@ -36,15 +36,16 @@ async function createNote(req, res) {
 
 async function updateNote(req, res) {
   try {
-     const { title, content, techStack, liveUrl, githubUrl } = req.body;
+    const { title, content, techStack, liveUrl, githubUrl, featured } = req.body;
 
     const updateData = {};
 
-    if (title) updateData.title = title;
-    if (content) updateData.content = content;
-    if (techStack) updateData.techStack = techStack;
+    if (title !== undefined) updateData.title = title;
+    if (content !== undefined) updateData.content = content;
+    if (techStack !== undefined) updateData.techStack = techStack;
     if (liveUrl !== undefined) updateData.liveUrl = liveUrl;
     if (githubUrl !== undefined) updateData.githubUrl = githubUrl;
+    if (featured !== undefined) updateData.featured = featured;
 
     if (Object.keys(updateData).length === 0) {
       return res.status(400).json({ message: "Nothing to update." });
@@ -55,10 +56,14 @@ async function updateNote(req, res) {
       { $set: updateData },
       { new: true, runValidators: true }
     );
-    if (!updatedNote)
+
+    if (!updatedNote) {
       return res.status(404).json({ message: "Note not found." });
+    }
+
     res.status(200).json(updatedNote);
   } catch (error) {
+    console.error("UPDATE ERROR:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 }

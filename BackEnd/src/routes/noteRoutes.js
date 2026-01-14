@@ -1,13 +1,22 @@
 import express from "express";
-import { createNote, deleteNote, getAllNotes, getNote, updateNote } from "../controllers/notesController.js";
+import {
+  getAllNotes,
+  createNote,
+  updateNote,
+  deleteNote,
+  getNote,
+} from "../controllers/notesController.js";
+import adminMiddleware from "../middleware/admin.js";
+
 const router = express.Router();
 
-router.get("/",getAllNotes)
-router.post("/",createNote)
-router.put("/:id",updateNote)
-router.delete("/:id",deleteNote)
-router.get("/:id",getNote)
+// Public
+router.get("/", getAllNotes);
+router.get("/:id", getNote);
 
-
+// Admin-only
+router.post("/", adminMiddleware, createNote);
+router.put("/:id", adminMiddleware, updateNote);
+router.delete("/:id", adminMiddleware, deleteNote);
 
 export default router;

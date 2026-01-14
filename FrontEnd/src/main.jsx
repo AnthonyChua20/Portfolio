@@ -1,15 +1,20 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import {BrowserRouter} from "react-router"
-import {Toaster} from "react-hot-toast"
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router";
+import { Toaster } from "react-hot-toast";
 
-createRoot(document.getElementById('root')).render(
+import "./index.css";
+import App from "./App.jsx";
+import { getTheme } from "./lib/theme";
+
+// ✅ Set theme BEFORE React renders
+document.documentElement.setAttribute("data-theme", getTheme());
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-    <App />
-    <Toaster/>
+      <App />
+      <Toaster />
     </BrowserRouter>
-  </StrictMode>,
-)
+  </StrictMode>
+);

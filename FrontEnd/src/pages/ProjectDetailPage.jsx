@@ -3,11 +3,14 @@ import { Link, useNavigate, useParams } from "react-router";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 import { ArrowLeftIcon, LoaderIcon, Trash2Icon } from "lucide-react";
+import { isAdmin } from "../lib/admin.js";
+import ReactMarkdown from "react-markdown";
 
 const ProjectDetailPage = () => {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [techStackInput, setTechStackInput] = useState("");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -17,6 +20,7 @@ const ProjectDetailPage = () => {
       try {
         const res = await api.get(`/notes/${id}`);
         setProject(res.data);
+        setTechStackInput(res.data.techStack?.join(", ") || "");
       } catch (error) {
         toast.error("Failed to fetch project");
       } finally {
@@ -28,8 +32,10 @@ const ProjectDetailPage = () => {
   }, [id]);
 
   const handleDelete = async () => {
+    if (!isAdmin()) return;
     if (!window.confirm("Are you sure you want to delete this project?"))
       return;
+
     try {
       await api.delete(`/notes/${id}`);
       toast.success("Project deleted");
@@ -40,14 +46,18 @@ const ProjectDetailPage = () => {
   };
 
   const handleSave = async () => {
-    if (!project.title.trim() || !project.content.trim()) {
-      toast.error("Please add a project title and description");
-      return;
-    }
+    if (!isAdmin()) return;
+    const updatedProject = {
+      ...project,
+      techStack: techStackInput
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean),
+    };
 
     setSaving(true);
     try {
-      await api.put(`/notes/${id}`, project);
+      await api.put(`/notes/${id}`, updatedProject);
       toast.success("Project updated successfully");
       navigate("/");
     } catch (error) {
@@ -64,7 +74,13 @@ const ProjectDetailPage = () => {
       </div>
     );
   }
-
+  if (!project) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-error">Project not found</p>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-base-200">
       <div className="container mx-auto px-4 py-8">
@@ -75,25 +91,38 @@ const ProjectDetailPage = () => {
               Back to projects
             </Link>
 
-            <button
-              onClick={handleDelete}
-              className="btn btn-error btn-outline"
-            >
-              <Trash2Icon className="h-5 w-5" />
-              Delete Project
-            </button>
+            {isAdmin() && (
+              <button
+                onClick={handleDelete}
+                className="btn btn-error btn-outline"
+              >
+                <Trash2Icon className="h-5 w-5" />
+                Delete Project
+              </button>
+            )}
           </div>
 
           <div className="card bg-base-100">
             <div className="card-body">
+              {/* Title */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.techStack?.map((tech) => (
+                  <span
+                    key={tech}
+                    className="badge badge-primary badge-outline"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
               <div className="form-control mb-4">
                 <label className="label">
                   <span className="label-text">Project Title</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Notes API (MERN Stack)"
-                  className="input input-bordered"
+                  className="input input-bordered disabled:bg-base-200"
+                  disabled={!isAdmin}
                   value={project.title || ""}
                   onChange={(e) =>
                     setProject({ ...project, title: e.target.value })
@@ -101,19 +130,37 @@ const ProjectDetailPage = () => {
                 />
               </div>
 
-              <div className="form-control mb-4">
-                <label className="label">
-                  <span className="label-text">Project Description</span>
-                </label>
+              {/* Description */}
+              {!isAdmin() ? (
+                <div className="prose prose-invert max-w-none">
+                  <ReactMarkdown>{project.content}</ReactMarkdown>
+                </div>
+              ) : (
                 <textarea
-                  placeholder="Describe what you built, technologies used, and what you learned"
                   className="textarea textarea-bordered h-32"
-                  value={project.content || ""}
+                  value={project.content}
                   onChange={(e) =>
                     setProject({ ...project, content: e.target.value })
                   }
                 />
-              </div>
+              )}
+
+              {/* Tech Stack */}
+              {isAdmin() && (
+                <div className="form-control mb-4">
+                  <label className="cursor-pointer flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-primary"
+                      checked={project.featured || false}
+                      onChange={(e) =>
+                        setProject({ ...project, featured: e.target.checked })
+                      }
+                    />
+                    <span className="label-text">Featured Project</span>
+                  </label>
+                </div>
+              )}
               <div className="form-control mb-4">
                 <label className="label">
                   <span className="label-text">
@@ -122,27 +169,22 @@ const ProjectDetailPage = () => {
                 </label>
                 <input
                   type="text"
-                  className="input input-bordered"
-                  value={project.techStack?.join(", ") || ""}
-                  onChange={(e) =>
-                    setProject({
-                      ...project,
-                      techStack: e.target.value
-                        .split(",")
-                        .map((t) => t.trim())
-                        .filter(Boolean),
-                    })
-                  }
+                  className="input input-bordered disabled:bg-base-200"
+                  disabled={!isAdmin()}
+                  value={techStackInput}
+                  onChange={(e) => setTechStackInput(e.target.value)}
                 />
               </div>
 
+              {/* Live URL */}
               <div className="form-control mb-4">
                 <label className="label">
                   <span className="label-text">Live Demo URL</span>
                 </label>
                 <input
                   type="url"
-                  className="input input-bordered"
+                  className="input input-bordered disabled:bg-base-200"
+                  disabled={!isAdmin()}
                   value={project.liveUrl || ""}
                   onChange={(e) =>
                     setProject({ ...project, liveUrl: e.target.value })
@@ -150,28 +192,34 @@ const ProjectDetailPage = () => {
                 />
               </div>
 
+              {/* GitHub URL */}
               <div className="form-control mb-4">
                 <label className="label">
                   <span className="label-text">GitHub Repository URL</span>
                 </label>
                 <input
                   type="url"
-                  className="input input-bordered"
+                  className="input input-bordered disabled:bg-base-200"
+                  disabled={!isAdmin()}
                   value={project.githubUrl || ""}
                   onChange={(e) =>
                     setProject({ ...project, githubUrl: e.target.value })
                   }
                 />
               </div>
-              <div className="card-actions justify-end">
-                <button
-                  className="btn btn-primary"
-                  disabled={saving}
-                  onClick={handleSave}
-                >
-                  {saving ? "Saving..." : "Save Changes"}
-                </button>
-              </div>
+
+              {/* Save */}
+              {isAdmin() && (
+                <div className="card-actions justify-end">
+                  <button
+                    className="btn btn-primary"
+                    disabled={saving}
+                    onClick={handleSave}
+                  >
+                    {saving ? "Saving..." : "Save Changes"}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
