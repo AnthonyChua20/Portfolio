@@ -16,10 +16,12 @@ const __dirname = path.resolve();
 // Middleware
 //For development(CORS)
   app.use(
-    cors({
-      origin: "http://localhost:5173",
-    })
-  );
+  cors({
+    origin: process.env.NODE_ENV === "production"
+      ? "*"
+      : "http://localhost:5173",
+  })
+);
 
 app.use(express.json());
 app.use(logger);
@@ -28,7 +30,6 @@ app.use(rateLimiter);
 // Routes
 app.use("/api/notes", noteRoutes);
 
-app.use(express.static(path.join()));
 
 app.use(errorHandler);
 
