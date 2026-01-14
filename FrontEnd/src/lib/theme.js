@@ -13,4 +13,5 @@ export const toggleTheme = () => {
   const current = getTheme();
   const next = current === "garden" ? "dark" : "garden";
   setTheme(next);
+  return next;
 };
