@@ -105,45 +105,55 @@ const ProjectDetailPage = () => {
           <div className="card bg-base-100">
             <div className="card-body">
               {/* Title */}
-              <div className="flex flex-wrap gap-2 mb-4">
+              <p className="text-xs uppercase tracking-wide text-base-content/50 mb-2">
+                Tech Stack
+              </p>
+              <div className="flex flex-wrap gap-2">
                 {project.techStack?.map((tech) => (
                   <span
                     key={tech}
-                    className="badge badge-primary badge-outline"
+                    className="badge badge-outline badge-sm text-base-content/70"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
-              <div className="form-control mb-4">
-                <label className="label">
-                  <span className="label-text">Project Title</span>
-                </label>
-                <input
-                  type="text"
-                  className="input input-bordered disabled:bg-base-200"
-                  disabled={!isAdmin}
-                  value={project.title || ""}
-                  onChange={(e) =>
-                    setProject({ ...project, title: e.target.value })
-                  }
-                />
-              </div>
+              {/* Title */}
+              {!isAdmin() ? (
+                <h1 className="text-3xl font-bold text-base-content mb-4">
+                  {project.title}
+                </h1>
+              ) : (
+                <div className="form-control mb-6">
+                  <label className="label">
+                    <span className="label-text">Project Title</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="input input-bordered"
+                    value={project.title || ""}
+                    onChange={(e) =>
+                      setProject({ ...project, title: e.target.value })
+                    }
+                  />
+                </div>
+              )}
 
               {/* Description */}
               {!isAdmin() ? (
-                <div className="prose prose-invert max-w-none">
+                <div className="prose max-w-none text-base-content">
                   <ReactMarkdown>{project.content}</ReactMarkdown>
                 </div>
               ) : (
                 <textarea
-                  className="textarea textarea-bordered h-32"
+                  className="textarea textarea-bordered min-h-[200px] font-mono text-sm"
                   value={project.content}
                   onChange={(e) =>
                     setProject({ ...project, content: e.target.value })
                   }
                 />
               )}
+              <div className="divider my-6"></div>
 
               {/* Tech Stack */}
               {isAdmin() && (
@@ -176,36 +186,28 @@ const ProjectDetailPage = () => {
                 />
               </div>
 
-              {/* Live URL */}
-              <div className="form-control mb-4">
-                <label className="label">
-                  <span className="label-text">Live Demo URL</span>
-                </label>
-                <input
-                  type="url"
-                  className="input input-bordered disabled:bg-base-200"
-                  disabled={!isAdmin()}
-                  value={project.liveUrl || ""}
-                  onChange={(e) =>
-                    setProject({ ...project, liveUrl: e.target.value })
-                  }
-                />
-              </div>
+              <div className="flex gap-3 mb-6">
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-outline"
+                  >
+                    GitHub
+                  </a>
+                )}
 
-              {/* GitHub URL */}
-              <div className="form-control mb-4">
-                <label className="label">
-                  <span className="label-text">GitHub Repository URL</span>
-                </label>
-                <input
-                  type="url"
-                  className="input input-bordered disabled:bg-base-200"
-                  disabled={!isAdmin()}
-                  value={project.githubUrl || ""}
-                  onChange={(e) =>
-                    setProject({ ...project, githubUrl: e.target.value })
-                  }
-                />
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-primary"
+                  >
+                    Live Demo
+                  </a>
+                )}
               </div>
 
               {/* Save */}
