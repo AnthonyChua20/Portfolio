@@ -1,5 +1,8 @@
 📌 Project Overview
 
+🌐 **Live Portfolio Website:** https://portfolio-lrgz.onrender.com  
+This backend service powers my personal portfolio website and is actively deployed.
+
 This project is the backend service for my personal portfolio website, built using the MERN stack.
 
 It exposes a RESTful API for managing notes (used as portfolio content) and demonstrates core backend engineering concepts such as CRUD operations, middleware usage, database integration, and basic API security practices.
