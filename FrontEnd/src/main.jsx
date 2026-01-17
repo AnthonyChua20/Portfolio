@@ -5,10 +5,9 @@ import { Toaster } from "react-hot-toast";
 
 import "./index.css";
 import App from "./App.jsx";
-import { getTheme } from "./lib/theme";
-
-// ✅ Set theme BEFORE React renders
-document.documentElement.setAttribute("data-theme", getTheme());
+import { getTheme, setTheme } from "./lib/theme";
+//Setting of default theme
+setTheme(getTheme());
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

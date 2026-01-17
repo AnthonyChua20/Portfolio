@@ -1,7 +1,7 @@
 const THEMES = ["garden", "dark"];
 
 export const getTheme = () => {
-  return localStorage.getItem("theme") || "garden";
+  return localStorage.getItem("theme") || "dark";
 };
 
 export const setTheme = (theme) => {
