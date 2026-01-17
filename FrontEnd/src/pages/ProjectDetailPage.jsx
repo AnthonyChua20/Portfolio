@@ -22,14 +22,18 @@ const ProjectDetailPage = () => {
         setProject(res.data);
         setTechStackInput(res.data.techStack?.join(", ") || "");
       } catch (error) {
-        toast.error("Failed to fetch project");
+        if (error.response?.status === 404) {
+          navigate("/not-found", { replace: true });
+        } else {
+          navigate("/error", { replace: true });
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchProject();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleDelete = async () => {
     if (!isAdmin()) return;
@@ -39,7 +43,7 @@ const ProjectDetailPage = () => {
     try {
       await api.delete(`/notes/${id}`);
       toast.success("Project deleted");
-      navigate("/");
+      navigate("/", { replace: true });
     } catch (error) {
       toast.error("Failed to delete project");
     }
@@ -47,6 +51,7 @@ const ProjectDetailPage = () => {
 
   const handleSave = async () => {
     if (!isAdmin()) return;
+
     const updatedProject = {
       ...project,
       techStack: techStackInput
@@ -59,7 +64,7 @@ const ProjectDetailPage = () => {
     try {
       await api.put(`/notes/${id}`, updatedProject);
       toast.success("Project updated successfully");
-      navigate("/");
+      navigate("/", { replace: true });
     } catch (error) {
       toast.error("Failed to update project");
     } finally {
@@ -74,13 +79,13 @@ const ProjectDetailPage = () => {
       </div>
     );
   }
+
+  // Safety fallback (should rarely trigger now)
   if (!project) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-error">Project not found</p>
-      </div>
-    );
+    navigate("/not-found", { replace: true });
+    return null;
   }
+
   return (
     <div className="min-h-screen bg-base-200">
       <div className="container mx-auto px-4 py-8">
@@ -104,11 +109,11 @@ const ProjectDetailPage = () => {
 
           <div className="card bg-base-100">
             <div className="card-body">
-              {/* Title */}
+              {/* Tech Stack */}
               <p className="text-xs uppercase tracking-wide text-base-content/50 mb-2">
                 Tech Stack
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-4">
                 {project.techStack?.map((tech) => (
                   <span
                     key={tech}
@@ -118,30 +123,24 @@ const ProjectDetailPage = () => {
                   </span>
                 ))}
               </div>
+
               {/* Title */}
               {!isAdmin() ? (
-                <h1 className="text-3xl font-bold text-base-content mb-4">
-                  {project.title}
-                </h1>
+                <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
               ) : (
-                <div className="form-control mb-6">
-                  <label className="label">
-                    <span className="label-text">Project Title</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="input input-bordered"
-                    value={project.title || ""}
-                    onChange={(e) =>
-                      setProject({ ...project, title: e.target.value })
-                    }
-                  />
-                </div>
+                <input
+                  type="text"
+                  className="input input-bordered mb-6"
+                  value={project.title || ""}
+                  onChange={(e) =>
+                    setProject({ ...project, title: e.target.value })
+                  }
+                />
               )}
 
               {/* Description */}
               {!isAdmin() ? (
-                <div className="prose max-w-none text-base-content">
+                <div className="prose max-w-none">
                   <ReactMarkdown>{project.content}</ReactMarkdown>
                 </div>
               ) : (
@@ -153,38 +152,31 @@ const ProjectDetailPage = () => {
                   }
                 />
               )}
-              <div className="divider my-6"></div>
 
-              {/* Tech Stack */}
+              <div className="divider my-6" />
+
+              {/* Admin Controls */}
               {isAdmin() && (
-                <div className="form-control mb-4">
-                  <label className="cursor-pointer flex items-center gap-3">
-                    <input
-                      type="checkbox"
-                      className="checkbox checkbox-primary"
-                      checked={project.featured || false}
-                      onChange={(e) =>
-                        setProject({ ...project, featured: e.target.checked })
-                      }
-                    />
-                    <span className="label-text">Featured Project</span>
-                  </label>
-                </div>
-              )}
-              <div className="form-control mb-4">
-                <label className="label">
-                  <span className="label-text">
-                    Tech Stack (comma separated)
-                  </span>
+                <label className="flex items-center gap-3 mb-4">
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                    checked={project.featured || false}
+                    onChange={(e) =>
+                      setProject({ ...project, featured: e.target.checked })
+                    }
+                  />
+                  Featured Project
                 </label>
-                <input
-                  type="text"
-                  className="input input-bordered disabled:bg-base-200"
-                  disabled={!isAdmin()}
-                  value={techStackInput}
-                  onChange={(e) => setTechStackInput(e.target.value)}
-                />
-              </div>
+              )}
+
+              <input
+                type="text"
+                className="input input-bordered mb-4"
+                disabled={!isAdmin()}
+                value={techStackInput}
+                onChange={(e) => setTechStackInput(e.target.value)}
+              />
 
               <div className="flex gap-3 mb-6">
                 {project.githubUrl && (
@@ -210,7 +202,6 @@ const ProjectDetailPage = () => {
                 )}
               </div>
 
-              {/* Save */}
               {isAdmin() && (
                 <div className="card-actions justify-end">
                   <button

@@ -1,10 +1,13 @@
 import React from "react";
-import { Route, Routes, Navigate } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import HomePage from "./pages/HomePage";
 import CreatePage from "./pages/CreatePage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
-import "./index.css";
+import NotFoundPage from "./pages/NotFoundPage";
+import ErrorPage from "./pages/ErrorPage";
 import { isAdmin } from "./lib/admin";
+import "./index.css";
+import ForbiddenPage from "./pages/ForbiddenPage";
 
 const App = () => {
   return (
@@ -32,11 +35,21 @@ const App = () => {
       <div className="relative z-10">
         <Routes>
           <Route path="/" element={<HomePage />} />
+
           <Route
             path="/create"
-            element={isAdmin() ? <CreatePage /> : <Navigate to="/" />}
+            element={isAdmin() ? <CreatePage /> : <Navigate to="/" replace />}
           />
+
           <Route path="/project/:id" element={<ProjectDetailPage />} />
+
+          {/* Error routes */}
+          <Route path="/error" element={<ErrorPage />} />
+          <Route path="/not-found" element={<NotFoundPage />} />
+          <Route path="/forbidden" element={<ForbiddenPage />} />
+
+          {/* Catch-all */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </div>
