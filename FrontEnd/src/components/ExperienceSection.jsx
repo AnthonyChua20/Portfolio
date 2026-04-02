@@ -5,8 +5,8 @@ const ExperienceSection = () => {
     {
       title: "Third Party Threat Intern",
       org: "PwC Singapore",
-      date: "Jan 2026 - Present",
-      desc: "Specializing in Cyber Security & Privacy. Responsible for assessing third-party vendor risks, identifying potential supply chain vulnerabilities, and ensuring alignment with security governance frameworks.",
+      date: "August 2022 - Feb 2023",
+      desc: "Specialising in Cyber Security & Privacy. Responsible for assessing third-party vendor risks, identifying potential supply chain vulnerabilities, and ensuring alignment with security governance frameworks.",
       tags: [
         "TPRM",
         "Vulnerability Assessment",
