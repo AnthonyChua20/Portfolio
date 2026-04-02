@@ -7,6 +7,8 @@ import api from "../lib/axios";
 import NotesNotFound from "../components/ProjectsNotFound";
 import { isAdmin } from "../lib/admin";
 import BadgeSection from "../components/BadgeSection";
+import ExperienceSection from "../components/ExperienceSection";
+import { FaGithub, FaLinkedin, FaExternalLinkAlt } from "react-icons/fa";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -91,15 +93,24 @@ const HomePage = () => {
                   href="https://github.com/AnthonyChua20"
                   target="_blank"
                   rel="noreferrer"
-                  className="btn btn-sm btn-outline"
+                  className="btn btn-sm btn-outline border-base-content/30 text-base-content hover:bg-base-content hover:text-base-100 hover:border-base-content"
                 >
-                  GitHub
+                  <FaGithub className="text-lg" /> GitHub
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/anthony-chua-633778238/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-sm btn-outline border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
+                >
+                  <FaLinkedin className="text-lg" /> LinkedIn
                 </a>
               </div>
             </div>
           </div>
         </section>
-
+        {/* EXPERIENCE SECTION - Added here */}
+        {!isRateLimited && <ExperienceSection />}
         {/* STATUS */}
         {isRateLimited && (
           <div className="mt-6">
@@ -126,44 +137,44 @@ const HomePage = () => {
           </div>
         )}
 
-       {/* PROJECTS SECTION */}
-{!loading && projects.length > 0 && !isRateLimited && (
-  <section className="mt-12">
-    <div className="rounded-2xl border border-base-300 bg-base-100/40">
-      <div className="p-6 md:p-8">
-        <div className="flex items-end justify-between gap-4 mb-4">
-          <div>
-            <h2
-              id="projects"
-              className="text-2xl font-bold text-base-content"
-            >
-              Projects
-            </h2>
-            <p className="text-sm opacity-70 mt-1">
-              Featured projects appear first.
-            </p>
-          </div>
+        {/* PROJECTS SECTION */}
+        {!loading && projects.length > 0 && !isRateLimited && (
+          <section className="mt-12">
+            <div className="rounded-2xl border border-base-300 bg-base-100/40">
+              <div className="p-6 md:p-8">
+                <div className="flex items-end justify-between gap-4 mb-4">
+                  <div>
+                    <h2
+                      id="projects"
+                      className="text-2xl font-bold text-base-content"
+                    >
+                      Projects
+                    </h2>
+                    <p className="text-sm opacity-70 mt-1">
+                      Featured projects appear first.
+                    </p>
+                  </div>
 
-          <div className="hidden md:block text-sm opacity-60">
-            Click a project to view details
-          </div>
-        </div>
+                  <div className="hidden md:block text-sm opacity-60">
+                    Click a project to view details
+                  </div>
+                </div>
 
-        <div className="divider divider-neutral my-2"></div>
+                <div className="divider divider-neutral my-2"></div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 fade-in">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project._id}
-              project={project}
-              setProjects={setProjects}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-)}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 fade-in">
+                  {projects.map((project) => (
+                    <ProjectCard
+                      key={project._id}
+                      project={project}
+                      setProjects={setProjects}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* CERTIFICATIONS */}
         {!isRateLimited && (
