@@ -17,17 +17,34 @@ const BadgeCard = ({ badge }) => {
             group-hover:scale-110"
         />
 
-        <h3 className="text-sm font-semibold leading-tight">
-          {badge.title}
-        </h3>
+        <h3 className="text-sm font-semibold leading-tight">{badge.title}</h3>
 
-        <p className="text-xs text-base-content/60">
-          {badge.issuer}
-        </p>
+        <p className="text-xs text-base-content/60">{badge.issuer}</p>
 
-        <span className="badge badge-outline badge-xs mt-1">
-          Verified
-        </span>
+        <div
+          className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full 
+                bg-white/5 border border-white/10 backdrop-blur-md 
+                shadow-sm group-hover:border-white/20 transition-colors"
+        >
+          {/* A subtle silver checkmark */}
+          <svg
+            className="w-3 h-3 text-slate-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="3"
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+
+          <span className="text-[10px] font-medium uppercase tracking-widest text-slate-200">
+            Verified
+          </span>
+        </div>
       </div>
     </a>
   );
