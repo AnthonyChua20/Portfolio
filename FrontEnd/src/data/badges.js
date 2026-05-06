@@ -1,11 +1,24 @@
 export const badges = [
   {
+    id: "isc2-cc",
+    title: "ISC2 Certified in Cybersecurity",
+    issuer: "ISC2",
+    category: "Security",
+    image: "/badges/isc2-candidate.png",
+    credlyUrl: "/docs/AnthonyChuaISC2.pdf",
+    featured: true,
+    description:
+      "ANSI/ASTM E2659 Accredited. Learner ID: 9d79052c-8549-4429-8fd0-5753dfb99c07. Issued: 05/05/2026.",
+  },
+  ,
+  {
     id: "ccna-itn",
     title: "CCNA: Introduction to Networks",
     issuer: "Cisco",
     category: "Core Networking",
     image: "/badges/ccna-itn.png",
-    credlyUrl: "https://www.credly.com/badges/ca40180f-e759-4b8c-a67c-2037c35ae80c/public_url/",
+    credlyUrl:
+      "https://www.credly.com/badges/ca40180f-e759-4b8c-a67c-2037c35ae80c/public_url/",
     featured: true,
   },
   {
@@ -14,7 +27,8 @@ export const badges = [
     issuer: "Cisco",
     category: "Core Networking",
     image: "/badges/networking-basics.png",
-    credlyUrl: "https://www.credly.com/badges/afec04a4-650e-4f54-8953-8f221e84bf7c/public_url",
+    credlyUrl:
+      "https://www.credly.com/badges/afec04a4-650e-4f54-8953-8f221e84bf7c/public_url",
     featured: true,
   },
   {
@@ -23,7 +37,8 @@ export const badges = [
     issuer: "Cisco",
     category: "Security",
     image: "/badges/network-defense.png",
-    credlyUrl: "https://www.credly.com/badges/50a0c202-fa4f-4674-b067-17a1e0e0e265/public_url",
+    credlyUrl:
+      "https://www.credly.com/badges/50a0c202-fa4f-4674-b067-17a1e0e0e265/public_url",
     featured: true,
   },
   {
@@ -32,7 +47,8 @@ export const badges = [
     issuer: "Cisco",
     category: "Security",
     image: "/badges/endpoint-security.png",
-    credlyUrl: "https://www.credly.com/badges/0f6c033e-4908-46c2-801e-68e511621d40/public_url",
+    credlyUrl:
+      "https://www.credly.com/badges/0f6c033e-4908-46c2-801e-68e511621d40/public_url",
     featured: false,
   },
   {
@@ -41,7 +57,8 @@ export const badges = [
     issuer: "Cisco",
     category: "Security",
     image: "/badges/cyber-threat.png",
-    credlyUrl: "https://www.credly.com/badges/705dade0-1126-4945-8d07-c5d94c0e7594/public_url",
+    credlyUrl:
+      "https://www.credly.com/badges/705dade0-1126-4945-8d07-c5d94c0e7594/public_url",
     featured: false,
   },
   {
@@ -50,7 +67,8 @@ export const badges = [
     issuer: "Cisco",
     category: "Security",
     image: "/badges/intro-cyber.png",
-    credlyUrl: "https://www.credly.com/badges/065fb2f4-5322-4d08-ab99-c5d862f26e1f/public_url",
+    credlyUrl:
+      "https://www.credly.com/badges/065fb2f4-5322-4d08-ab99-c5d862f26e1f/public_url",
     featured: false,
   },
   {
@@ -59,7 +77,8 @@ export const badges = [
     issuer: "Cisco",
     category: "Career Path",
     image: "/badges/junior-cyber.png",
-    credlyUrl: "https://www.credly.com/badges/763b64da-bafc-44ee-9c01-a1c01438b163/public_url",
+    credlyUrl:
+      "https://www.credly.com/badges/763b64da-bafc-44ee-9c01-a1c01438b163/public_url",
     featured: false,
   },
 ];
