@@ -21,27 +21,25 @@ const BadgeCard = ({ badge }) => {
 
         <p className="text-xs text-base-content/60">{badge.issuer}</p>
 
-        <div
-          className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full 
-                bg-white/5 border border-white/10 backdrop-blur-md 
-                shadow-sm group-hover:border-white/20 transition-colors"
-        >
-          {/* A subtle silver checkmark */}
+        <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-base-300/60 border border-base-content/10 backdrop-blur-md shadow-sm group-hover:border-base-content/20 transition-colors">
+          {/* Adaptive monochrome checkmark */}
           <svg
-            className="w-3 h-3 text-slate-300"
+            className="w-3 h-3 text-base-content/70"
             fill="none"
             stroke="currentColor"
+            strokeWidth="3"
             viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="3"
               d="M5 13l4 4L19 7"
             />
           </svg>
 
-          <span className="text-[10px] font-medium uppercase tracking-widest text-slate-200">
+          {/* High-contrast adaptive text */}
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-base-content/90">
             Verified
           </span>
         </div>

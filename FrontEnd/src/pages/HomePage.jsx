@@ -76,13 +76,21 @@ const HomePage = () => {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
-                <span className="badge badge-primary badge-outline">
+                <span className="badge badge-primary px-3 py-3 text-xs font-semibold shadow-sm">
                   Cybersecurity
                 </span>
-                <span className="badge badge-outline">Backend</span>
-                <span className="badge badge-outline">Node.js</span>
-                <span className="badge badge-outline">Express</span>
-                <span className="badge badge-outline">MongoDB</span>
+                <span className="badge bg-neutral text-neutral-content border-neutral-focus px-3 py-3 text-xs font-semibold shadow-sm">
+                  Backend
+                </span>
+                <span className="badge bg-neutral text-neutral-content border-neutral-focus px-3 py-3 text-xs font-semibold shadow-sm">
+                  Node.js
+                </span>
+                <span className="badge bg-neutral text-neutral-content border-neutral-focus px-3 py-3 text-xs font-semibold shadow-sm">
+                  Express
+                </span>
+                <span className="badge bg-neutral text-neutral-content border-neutral-focus px-3 py-3 text-xs font-semibold shadow-sm">
+                  MongoDB
+                </span>
               </div>
 
               <div className="mt-7 flex flex-wrap gap-3">

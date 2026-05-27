@@ -48,7 +48,7 @@ const ProjectCard = ({ project, setProjects }) => {
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             {project.featured && (
-              <span className="badge badge-primary badge-sm mb-2">
+              <span className="badge badge-primary badge-sm mb-2 font-semibold">
                 ★ Featured
               </span>
             )}
@@ -68,17 +68,17 @@ const ProjectCard = ({ project, setProjects }) => {
 
         {/* Tech stack */}
         {!!project.techStack?.length && (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-4 flex flex-wrap gap-1.5">
             {project.techStack.slice(0, 4).map((tech) => (
               <span
                 key={tech}
-                className="badge badge-outline badge-sm opacity-70"
+                className="badge bg-neutral text-neutral-content border-none badge-sm px-2.5 py-2.5 font-semibold"
               >
                 {tech}
               </span>
             ))}
             {project.techStack.length > 4 && (
-              <span className="badge badge-ghost badge-sm opacity-60">
+              <span className="badge bg-base-300 text-base-content border border-base-content/10 badge-sm px-2 py-2.5 font-semibold">
                 +{project.techStack.length - 4}
               </span>
             )}
@@ -96,7 +96,7 @@ const ProjectCard = ({ project, setProjects }) => {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-xs btn-primary"
+                className="btn btn-xs btn-primary font-semibold"
                 onClick={(e) => e.stopPropagation()}
               >
                 Live
@@ -108,7 +108,7 @@ const ProjectCard = ({ project, setProjects }) => {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-xs btn-outline"
+                className="btn btn-xs btn-outline font-semibold"
                 onClick={(e) => e.stopPropagation()}
               >
                 GitHub

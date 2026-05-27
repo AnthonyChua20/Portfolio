@@ -111,7 +111,7 @@ const ProjectDetailPage = () => {
         <div className="max-w-2xl mx-auto">
           {/* Top bar */}
           <div className="flex items-center justify-between mb-4">
-            <Link to="/" className="btn btn-ghost btn-sm">
+            <Link to="/" className="btn btn-ghost btn-sm font-semibold">
               <ArrowLeftIcon className="h-4 w-4" />
               Back
             </Link>
@@ -119,7 +119,7 @@ const ProjectDetailPage = () => {
             {isAdmin() && (
               <button
                 onClick={handleDelete}
-                className="btn btn-error btn-outline btn-sm"
+                className="btn btn-error btn-outline btn-sm font-semibold"
               >
                 <Trash2Icon className="h-4 w-4" />
                 Delete
@@ -137,7 +137,7 @@ const ProjectDetailPage = () => {
               ) : (
                 <input
                   type="text"
-                  className="input input-bordered mb-4 text-lg"
+                  className="input input-bordered mb-4 text-lg font-semibold"
                   value={project.title || ""}
                   onChange={(e) =>
                     setProject({ ...project, title: e.target.value })
@@ -152,7 +152,7 @@ const ProjectDetailPage = () => {
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-sm btn-primary"
+                    className="btn btn-sm btn-primary font-semibold"
                   >
                     Live Demo
                   </a>
@@ -163,26 +163,26 @@ const ProjectDetailPage = () => {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-sm btn-outline"
+                    className="btn btn-sm btn-outline font-semibold"
                   >
                     GitHub
                   </a>
                 )}
 
                 {project.featured && (
-                  <span className="badge badge-primary badge-outline">
+                  <span className="badge badge-primary badge-sm px-2.5 py-2.5 font-semibold shadow-sm">
                     Featured
                   </span>
                 )}
               </div>
 
-              {/* Tech stack */}
+              {/* Tech stack — Updated to solid matching design system */}
               {!!project.techStack?.length && (
                 <div className="mt-5 flex flex-wrap gap-2">
                   {project.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="badge badge-outline badge-sm opacity-80"
+                      className="badge bg-neutral text-neutral-content border-neutral-focus badge-sm px-2.5 py-2.5 font-semibold shadow-sm"
                     >
                       {tech}
                     </span>
@@ -213,7 +213,7 @@ const ProjectDetailPage = () => {
                   <h2 className="font-semibold mb-2">
                     Security considerations
                   </h2>
-                  <ul className="list-disc pl-5 space-y-1 opacity-80">
+                  <ul className="list-disc pl-5 space-y-1 opacity-80 text-sm">
                     <li>Input treated as untrusted and handled safely</li>
                     <li>Rate limiting used to reduce abuse</li>
                     <li>No sensitive error details exposed to users</li>
@@ -227,7 +227,7 @@ const ProjectDetailPage = () => {
                 <>
                   <div className="divider my-6" />
 
-                  <label className="flex items-center gap-3 mb-4">
+                  <label className="flex items-center gap-3 mb-4 font-semibold text-sm">
                     <input
                       type="checkbox"
                       className="checkbox checkbox-primary"
@@ -241,14 +241,14 @@ const ProjectDetailPage = () => {
 
                   <input
                     type="text"
-                    className="input input-bordered mb-4"
+                    className="input input-bordered mb-4 text-sm font-mono"
                     value={techStackInput}
                     onChange={(e) => setTechStackInput(e.target.value)}
                   />
 
                   <div className="card-actions justify-end">
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary font-semibold"
                       disabled={saving}
                       onClick={handleSave}
                     >
@@ -273,7 +273,7 @@ const ProjectDetailPage = () => {
                       <p className="text-xs opacity-60 mb-1">
                         ← Previous project
                       </p>
-                      <p className="font-medium group-hover:underline">
+                      <p className="font-semibold group-hover:underline">
                         {allProjects[currentIndex - 1]?.title || "—"}
                       </p>
                     </div>
@@ -290,7 +290,7 @@ const ProjectDetailPage = () => {
                   >
                     <div>
                       <p className="text-xs opacity-60 mb-1">Next project →</p>
-                      <p className="font-medium group-hover:underline">
+                      <p className="font-semibold group-hover:underline">
                         {allProjects[currentIndex + 1]?.title || "—"}
                       </p>
                     </div>
